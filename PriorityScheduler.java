@@ -128,6 +128,7 @@ public class PriorityScheduler extends Scheduler {
     protected class PriorityQueue extends ThreadQueue {
 	PriorityQueue(boolean transferPriority) {
 	    this.transferPriority = transferPriority;
+	    this.queue = new TreeMap<int, KThread>();
 	}
 
 	public void waitForAccess(KThread thread) {
@@ -142,8 +143,10 @@ public class PriorityScheduler extends Scheduler {
 
 	public KThread nextThread() {
 	    Lib.assertTrue(Machine.interrupt().disabled());
-	    // implement me
-	    return null;
+	    
+	    // implement me *******
+		
+	    return this.queue.pollLastEntry().getValue();
 	}
 
 	/**
@@ -154,13 +157,13 @@ public class PriorityScheduler extends Scheduler {
 	 *		return.
 	 */
 	protected ThreadState pickNextThread() {
-	    // implement me
-	    return null;
+	    // implement me **************
+	    return nextThread().getThreadState();
 	}
 	
 	public void print() {
 	    Lib.assertTrue(Machine.interrupt().disabled());
-	    // implement me (if you want)
+	    // implement me (if you want) **************
 	}
 
 	/**
@@ -168,6 +171,7 @@ public class PriorityScheduler extends Scheduler {
 	 * threads to the owning thread.
 	 */
 	public boolean transferPriority;
+	public TreeMap<int, KThread> queue;
     }
 
     /**
